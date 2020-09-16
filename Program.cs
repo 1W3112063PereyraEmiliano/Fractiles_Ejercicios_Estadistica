@@ -6,7 +6,6 @@ namespace NetArreglos
     {
         static void Main(string[] args)
         {
-            EventHandler ev;
             int porc = 0;
             float result = 0f;
             const int RES = 10;
@@ -31,24 +30,20 @@ namespace NetArreglos
                     Console.Write(numeros[i].ToString() + " ");
                 }
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Que Decile deseas buscar? [1-2-3-5-6-7-8-9]");
+                Console.WriteLine("Que Cuartil deseas buscar? [1-2-3]");
                 do
                 {
                     porc = int.Parse(Console.ReadLine());
-                    if (porc > 9 || porc < 1)
+                    if (porc > 3 || porc < 1)
                         Console.WriteLine("Digite Un Numero Correcto.");
-                } while (porc > 9 || porc < 1);
-
-                for (int i = 0; i < 10; i++)
-                {
-                    if (porc == i)
-                    {
-                        result = porc * (RES + 1) / 10;
-                    }
-                }
+                } while (porc > 3 || porc < 1);
+                result = (porc * (RES+1))/4;
                 if (result % 1 == 0)
                 {
+     
                     Console.WriteLine("Tu Decile es el Numero: {0}", numeros[Convert.ToInt32(result)]);
+                    Console.WriteLine("Aproximadamente el {0}% de los numeros son menores o iguales a {1} mientras el restante {2}% son mayores o iguales a {3}",porc*25, numeros[Convert.ToInt32(result)], 100-porc*25, numeros[Convert.ToInt32(result)]);
+                      
                 }
                 else
                 {
@@ -69,6 +64,7 @@ namespace NetArreglos
                 if (Console.ReadKey().Key == ConsoleKey.D)
                 {
                     Console.Clear();
+                    Console.WriteLine("\n");
                 }
 
             }
