@@ -6,8 +6,8 @@ namespace NetArreglos
     {
         static void Main(string[] args)
         {
-            int porc = 0;
-            float result = 0f;
+            double porc = 0;
+            double result = 0;
             const int RES = 10;
             int[] numeros = new int[RES];
             numeros[0] = 1;
@@ -21,7 +21,7 @@ namespace NetArreglos
             numeros[8] = 8;
             numeros[9] = 8;
 
-            Console.WriteLine("Decile de los siguientes numeros.");
+            Console.WriteLine("Percentiles de los siguientes numeros.");
             Console.ForegroundColor = ConsoleColor.Red;
             for (int h = 0; h < 10000; h++)
             {
@@ -30,20 +30,18 @@ namespace NetArreglos
                     Console.Write(numeros[i].ToString() + " ");
                 }
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Que Cuartil deseas buscar? [1-2-3]");
+                Console.WriteLine("Que Percentil deseas buscar? [1..99]");
                 do
                 {
                     porc = int.Parse(Console.ReadLine());
-                    if (porc > 3 || porc < 1)
+                    if (porc > 99 || porc < 1)
                         Console.WriteLine("Digite Un Numero Correcto.");
-                } while (porc > 3 || porc < 1);
-                result = (porc * (RES+1))/4;
+                } while (porc > 99 || porc < 1);
+                result = porc * (RES + 1) / 100;
                 if (result % 1 == 0)
                 {
-     
-                    Console.WriteLine("Tu Decile es el Numero: {0}", numeros[Convert.ToInt32(result)]);
-                    Console.WriteLine("Aproximadamente el {0}% de los numeros son menores o iguales a {1} mientras el restante {2}% son mayores o iguales a {3}",porc*25, numeros[Convert.ToInt32(result)], 100-porc*25, numeros[Convert.ToInt32(result)]);
-                      
+                    Console.WriteLine("Tu Percentil es el Numero: {0}", numeros[Convert.ToInt32(result)]);
+                    Console.WriteLine("Aproximadamente el {0}% de los numeros son menores o iguales a {1} mientras el restante {2}% son mayores o iguales a {3}",porc, numeros[Convert.ToInt32(result)], 100-porc, numeros[Convert.ToInt32(result)]);
                 }
                 else
                 {
@@ -51,22 +49,28 @@ namespace NetArreglos
                     int pos_des = 0;
                     for (int R = 0; R < RES; R++)
                     {
-                        if (Math.Round(result, 0) == numeros[R])
+                        if (Math.Round(result,0) == numeros[R])
                         {
-                            pos_ant = numeros[R];
+                            pos_ant = R;
+                            pos_des = R;
                         }
                     }
-                    pos_des = pos_des + 2;
+                    pos_ant = numeros[pos_ant-1];
+                    pos_des = numeros[pos_des+1];
                     result = pos_ant + pos_des / 2;
-                    Console.WriteLine("Tu Decile es el Numero: {0}", numeros[Convert.ToInt32(result)]);
-                }
+                    Console.WriteLine(pos_des+" "+pos_des);
+                    Console.WriteLine("Tu Percentil es el Numero: {0}", numeros[Convert.ToInt32(result)]);
+                    if (result%1==0)
+                    {
+                        Console.WriteLine("Aproximadamente el {0}% de los numeros son menores e igual a {1} mientras el restante {2}% son mayores e igual a {3}", porc, numeros[Convert.ToInt32(result)], 100 - porc, numeros[Convert.ToInt32(result)]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Aproximadamente el {0}% de los numeros son menores a {1} mientras el restante {2}% son mayores a {3}", porc, numeros[Convert.ToInt32(result)], 100 - porc, numeros[Convert.ToInt32(result)]);
 
-                if (Console.ReadKey().Key == ConsoleKey.D)
-                {
-                    Console.Clear();
-                    Console.WriteLine("\n");
+                    }
                 }
-
+                Console.WriteLine("\n");
             }
 
         }
